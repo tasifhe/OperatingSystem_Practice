@@ -19,8 +19,7 @@ bool compareArrival(Process p1, Process p2) {
 }
 
 void calculateTimes(vector<Process>& processes) {
-    int currentTime = 0, totalIdleTime = 0, totalWaitingTime = 0;
-    double averageWaitingTime;
+    int currentTime = 0, totalIdleTime = 0;
     for (auto &p : processes) {
         if (currentTime < p.arrivalTime) {
             totalIdleTime += p.arrivalTime - currentTime;
@@ -31,18 +30,13 @@ void calculateTimes(vector<Process>& processes) {
         p.turnaroundTime = p.completionTime - p.arrivalTime;
         p.waitingTime = p.turnaroundTime - p.burstTime;
 
-        totalWaitingTime += p.waitingTime;
         currentTime += p.burstTime;
     }
-
-    averageWaitingTime = (double)totalWaitingTime / processes.size();
-
     cout << "Process\tArrival Time\tBurst Time\tCompletion Time\tTurnaround Time\tWaiting Time\n";
     for (auto &p : processes) {
         cout << p.id << "\t\t" << p.arrivalTime << "\t\t" << p.burstTime << "\t\t" << p.completionTime << "\t\t" << p.turnaroundTime << "\t\t" << p.waitingTime << "\n";
     }
     cout << "Total Idle Time: " << totalIdleTime << endl;
-    cout << "Average Waiting Time: " << averageWaitingTime << endl;
 }
 
 int main() {
